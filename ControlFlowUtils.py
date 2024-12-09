@@ -761,6 +761,8 @@ If Require_Inputs is enabled, then you must specify the TRUE_IN and FALSE_IN inp
 If Condition is set to CUSTOM, you may further specify a custom expression which will be evaluated. Within this expression you may use the variables A and B to refer to those respective inputs as well as any named global variables from [Memory Storage] nodes. Most valid Python expressions, types and built-in functions are supported in the custom expression. For a full list of supported operations please consult the file 'Helper.py' included in this node pack.
 
 HOVER OVER THE INPUTS AND OUTPUTS FOR MORE INFO.
+
+When the condition is set to 'CUSTOM', the parameters Input A and Input B used in the custom_expression must not be None.
 """
 	def compare(self,A,B,condition,NOT,custom_expression=""):
 
@@ -848,7 +850,14 @@ HOVER OVER THE INPUTS AND OUTPUTS FOR MORE INFO.
 			if "A" in condition: lazy+=["A"]
 			if "B" in condition: lazy+=["B"]
 
-		if require_inputs:
+		skipped_computation = False
+		if condition == "CUSTOM":
+			if "a" in custom_expression.casefold() and A is None:
+				skipped_computation = True
+			if "b" in custom_expression.casefold() and B is None:
+				skipped_computation = True
+
+		if require_inputs and not skipped_computation:
 
 			ret = s.compare(A,B,condition,NOT,custom_expression)
 
