@@ -848,7 +848,14 @@ HOVER OVER THE INPUTS AND OUTPUTS FOR MORE INFO.
 			if "A" in condition: lazy+=["A"]
 			if "B" in condition: lazy+=["B"]
 
-		if require_inputs:
+		skipped_computation = False
+		if condition == "CUSTOM":
+			if "a" in custom_expression.casefold() and A is None:
+				skipped_computation = True
+			if "b" in custom_expression.casefold() and B is None:
+				skipped_computation = True
+
+		if require_inputs and not skipped_computation:
 
 			ret = s.compare(A,B,condition,NOT,custom_expression)
 
