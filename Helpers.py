@@ -7,7 +7,7 @@ import os
 import torch
 #from torch import *  # Import PyTorch
 
-DEBUG_MODE = True #Enable this flag to get all sorts of useful debug information in the console from most of the nodes in this pack.
+DEBUG_MODE = False #Enable this flag to get all sorts of useful debug information in the console from most of the nodes in this pack.
 
 # HELPER FUNCTIONS
 #******************	
